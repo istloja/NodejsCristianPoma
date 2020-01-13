@@ -1,0 +1,19 @@
+const express= require ("express");
+const bodyParser= require ("body-parser");
+const app=express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+app.get("/hola/es", (req, res) =>{
+    console.log(req);
+    res.json({mensaje:"Hola mundo"})
+}); 
+
+app.get("/hola/en", (req, res) =>{
+    console.log(req);
+    res.json({mensaje:"Hello world"})
+}); 
+
+app.listen(8001, ()=> {
+    console.log("Esa es mi cholo ")
+})
