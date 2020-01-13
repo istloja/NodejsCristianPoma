@@ -14,6 +14,7 @@ app.get("/hola/en", (req, res) =>{
     res.json({mensaje:"Hello world"})
 }); 
 
+require('./routes')(app);
 app.listen(8001, ()=> {
     console.log("Esa es mi cholo ")
 })
