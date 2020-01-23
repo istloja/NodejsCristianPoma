@@ -24,15 +24,34 @@ exports.crearNuevoUsuario = (req, res) => {
             res.status(500).send({ mensaje: "Ocurrio un error al crear el usuario" });
         else res.send(data);
     })
-} 
+}
 
-exports.eliminarUsuario = (req, res) =>{
+exports.eliminarUsuario = (req, res) => {
     const eliminarUser = {
-        id_usuario:req.body.id_usuario
+        id_usuario: req.body.id_usuario
     };
-    modelo.eliminarUsuario(eliminarUser, (err, data)=>{
+    modelo.eliminarUsuario(eliminarUser, (err, data) => {
         if (err)
             res.status(500).send({ mensaje: "Ocurrio un error al eliminar el usuario" });
         else res.send(data);
+    })
+}
+
+exports.actualizarUsuario = (req, res) => {
+    const id_usuario = req.body.id_usuario;
+    const editUser = new modelo(req.body);
+
+    modelo.actualizarUsuario(id_usuario, editUser, (err, data) => {
+
+        if (err) {
+            if (err.kind == "not_found") {
+                res.status(400).send({ mensaje: "Non se encontro el usuario con ese ID" });
+            }
+            else {
+                res.status(500).send({ mensaje: "Ocurrio un error al actualizar el usuario" });
+            }
+        } else {
+            res.send(data);
+        }
     })
 }
