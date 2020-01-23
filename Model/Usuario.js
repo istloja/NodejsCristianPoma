@@ -36,8 +36,8 @@ usuario.crearNuevoUsuario = (nuevoUsuario, result) => {
     )
 };
 
-usuario.eliminarUsuario= (eliminarUser, result) =>{
-    sql.query("Delete from usuario where ?", eliminarUser, (err, res)=>{
+usuario.eliminarUsuario = (eliminarUser, result) => {
+    sql.query("Delete from usuario where ?", eliminarUser, (err, res) => {
         if (err) {
             console.log('Error al eliminar el usuario', err)
             result(null, err);
@@ -45,6 +45,24 @@ usuario.eliminarUsuario= (eliminarUser, result) =>{
         } else {
             result(null, res);
         }
-    }) 
+    })
+}
+
+usuario.actualizarUsuario = (id_usuario, editUser, result) => {
+    sql.query("UPDATE usuario set cedula=?, nombre=?, apellido=?, direccion=?, telefono=?, tipo=?, correo=? where id_usuario=?",
+        [editUser.cedula, editUser.nombre, editUser.apellido, editUser.direccion, editUser.telefono,
+        editUser.tipo, editUser.correo, id_usuario], (err, res) => {
+            if (err) {
+                console.log('Error al actualizar el usuario', err)
+                result(null, err);
+                return;
+            } else {
+                if (res.affectedRows == 0) {
+                    result({ kind: "not_found" }, null)
+                } else {
+                    result(null, res);
+                }
+            }
+        })
 }
 module.exports = usuario;
