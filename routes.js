@@ -1,8 +1,10 @@
 module.exports =app =>{
-    const usuario= require('./Control/controlador');
-    app.post('/obtenerTodos', usuario.getAll);
-    app.post('/crearUsuario', usuario.crearNuevoUsuario);
-    app.post('/eliminarUser', usuario.eliminarUsuario);
-    app.post('/editUser', usuario.actualizarUsuario);
-    app.post('/userMongo', require('./Config/DbMongo'))
+    const pais= require('./Control/controlador');
+    const provincia = require('./Control/controladorProvincia');
+    app.get('/obtenerTodos', pais.getAll);
+    app.post('/crearPais', pais.crearNuevoPais); 
+    app.get('/obtenerTodosProv', provincia.getAll); 
+    app.post('/crearProv', provincia.crearNuevaProv);
+    app.post('/editarProv', provincia.actualizaProv); 
+    app.post('/buscarxId', provincia.buscarxId)
 }

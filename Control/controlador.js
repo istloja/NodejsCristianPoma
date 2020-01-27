@@ -1,6 +1,6 @@
-const modelo = require("../Model/Usuario");
+const modelo = require("../Model/Pais");
 exports.getAll = (req, res) => {
-    console.log(req)
+
     modelo.getAll((err, data) => {
         if (err)
             res.status(500).send({ mensaje: "No se pudo obtener los datos" });
@@ -8,50 +8,29 @@ exports.getAll = (req, res) => {
     });
 };
 
-exports.crearNuevoUsuario = (req, res) => {
-    const nuevoUsuario = new modelo({
-        id_usuario: req.body.id_usuario,
-        cedula: req.body.cedula,
+exports.crearNuevoPais = (req, res) => {
+    const nuevoPais = new modelo({
+        idpais: req.body.idpais,
         nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        direccion: req.body.direccion,
-        telefono: req.body.telefono,
-        correo: req.body.correo,
-        tipo: req.body.tipo
+        moneda: req.body.moneda,
+        superficie: req.body.superficie,
+        idioma: req.body.idioma,
+        nroHabitantes: req.body.nroHabitantes
     });
-    modelo.crearNuevoUsuario(nuevoUsuario, (err, data) => {
+    modelo.crearNuevoPais(nuevoPais, (err, data) => {
         if (err)
-            res.status(500).send({ mensaje: "Ocurrio un error al crear el usuario" });
+            res.status(500).send({ mensaje: "Ocurrio un error al crear el pais" });
         else res.send(data);
     })
 }
 
-exports.eliminarUsuario = (req, res) => {
-    const eliminarUser = {
-        id_usuario: req.body.id_usuario
+exports.eliminarPais = (req, res) => {
+    const elimPais = {
+        idpais: req.body.idpais
     };
-    modelo.eliminarUsuario(eliminarUser, (err, data) => {
+    modelo.eliminarUsuario(elimPais, (err, data) => {
         if (err)
-            res.status(500).send({ mensaje: "Ocurrio un error al eliminar el usuario" });
+            res.status(500).send({ mensaje: "Ocurrio un error al eliminar el pais" });
         else res.send(data);
-    })
-}
-
-exports.actualizarUsuario = (req, res) => {
-    const id_usuario = req.body.id_usuario;
-    const editUser = new modelo(req.body);
-
-    modelo.actualizarUsuario(id_usuario, editUser, (err, data) => {
-
-        if (err) {
-            if (err.kind == "not_found") {
-                res.status(400).send({ mensaje: "Non se encontro el usuario con ese ID" });
-            }
-            else {
-                res.status(500).send({ mensaje: "Ocurrio un error al actualizar el usuario" });
-            }
-        } else {
-            res.send(data);
-        }
     })
 }
